@@ -8,12 +8,13 @@ exports.handler = async (event) => {
     let now = date.toISOString();
 
     let result = evaluateFormula("="+event.expression);
+    let transactionId = (Math.random() + 1).toString(36).substring(7);
 
     //store request in DB history
     let params = {
         TableName:'ExpressionEvalDatabase',
         Item: {
-            'id': (Math.random() + 1).toString(36).substring(7),
+            'id': transactionId,
             'expression': event.expression,
             'result': result,
             'email': event.email,
@@ -39,7 +40,7 @@ exports.handler = async (event) => {
     await ses.sendEmail(email).promise();
 
     //construct response object
-    let responseText = JSON.stringify({"expression": `${event.expression}`, "email": `${event.email}`, "result":`${result}`});
+    let responseText = JSON.stringify({"id": `${transactionId}`, "expression": `${event.expression}`, "email": `${event.email}`, "result":`${result}`});
     const response = {
         statusCode: 200,
         body: responseText
