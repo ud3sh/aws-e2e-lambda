@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk');
 const { evaluateFormula } = require('./evalUtils.js');
+const MAIL_SENDER = "sender@ahf125vr.mailosaur.net";
+
 let dynamodb = new AWS.DynamoDB.DocumentClient();
 let ses = new AWS.SES({ region: "us-west-2" });
 
@@ -31,11 +33,12 @@ exports.handler = async (event) => {
         },
         Message: {
           Body: {
-            Text: { Data: `Your result for ${event.expression} is + ${result}` },
+            Text: { Data: `Your result for ${event.expression} is + ${result}. Transaction Id: ${transactionId}` },
+            Html: { Data: `<div>Your result for ${event.expression} is + ${result}. Transaction Id: ${transactionId}</div><div><a href="https://main.d2w6tcyr0gxmy5.amplifyapp.com/">Try again!</a></div>` },
           },
-          Subject: { Data: `Your result for ${event.expression} is + ${result}` },
+          Subject: { Data: `[${transactionId}] Your result for ${event.expression} is ${result}` },
         },
-        Source: "sender@ahf125vr.mailosaur.net",
+        Source: MAIL_SENDER,
       };
     await ses.sendEmail(email).promise();
 
