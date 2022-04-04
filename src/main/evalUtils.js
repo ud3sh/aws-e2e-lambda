@@ -61,13 +61,6 @@ exports.evaluateFormula = function(formula) {
         let currentResult = evaluateElementaryBinaryOperation(operatorsStack.pop(), leftOperand, rightOperand);
         operandsStack.push(currentResult);
       }
-      /*
-      if (operatorsStack.length > 0 && compareOperators(nextOperator, peek(operatorsStack).value) <= 0) {
-        let rightOperand = Number(operandsStack.pop());
-        let leftOperand = Number(operandsStack.pop());
-        let currentResult = evaluateElementaryBinaryOperation(operatorsStack.pop(), leftOperand, rightOperand);
-        operandsStack.push(currentResult);
-      } */
       operatorsStack.push(nextToken.value);
     } else if(nextToken.type === "number") {
       operandsStack.push(nextToken.value);
@@ -76,23 +69,18 @@ exports.evaluateFormula = function(formula) {
     }
   }
 
-  // Entire expression has been parsed at this point, apply remaining ops to remaining values.
+  // Entire expression has been parsed at this point, apply remaining ops to remaining values with no precedence.
   while(operatorsStack.length > 0){
-    /*if (operandsStack.length == 2) { */    
-    if (operandsStack.length == 1 && operatorsStack.length ==1) {
+    if (operandsStack.length == 1 && operatorsStack.length == 1) {
       operandsStack.push(evaluateElementaryBinaryOperation("*", operatorsStack.pop() == '-' ? -1 : 1, operandsStack.pop()));  
     } else {
       let rightOperand = Number(operandsStack.pop());
       let leftOperand = Number(operandsStack.pop());
       let currentResult = evaluateElementaryBinaryOperation(operatorsStack.pop(), leftOperand, rightOperand);
       operandsStack.push(currentResult);
-      //throw new Error(`Unexpected termination state with ${operatorsStack.length} operators and ${operandsStack ? operandsStack.length : 0} operands`)
     }
   }
-
   return Number(operandsStack[0]);
-
-  //return evaluateElementaryBinaryOperation(operatorsStack[0].value, operandsStack[0], operandsStack[1]);
 }
 
 exports.evaluateElementaryBinaryOperation = evaluateElementaryBinaryOperation;
