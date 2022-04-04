@@ -34,7 +34,7 @@ exports.handler = async (event) => {
           },
           Subject: { Data: `Your result for ${event.expression} is + ${result}` },
         },
-        Source: "recipient@ahf125vr.mailosaur.net",
+        Source: "sender@ahf125vr.mailosaur.net",
       };
     await ses.sendEmail(email).promise();
 

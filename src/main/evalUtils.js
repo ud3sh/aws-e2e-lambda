@@ -37,7 +37,6 @@ function evaluateElementaryBinaryOperation(operator, leftOperand, rightOperand) 
   } else if (operator === '^'){
     return Math.pow(leftOperand, rightOperand)
   } else {
-    console.log(`Unknown operator ${operator}`);
     throw new Error(`Undefined operator ${operator}`); 
   }
 }
@@ -47,11 +46,8 @@ exports.evaluateFormula = function(formula) {
   let operatorsStack = [];
   let formulaTokens = tokenizer(formula);
 
-  console.log(`Token length : ${formulaTokens.length}`);
-
   for(i=0;i<formulaTokens.length;i++) {
-    console.log(`formulaTokens[${i}] = { type: ${formulaTokens[i].type}, value: ${formulaTokens[i].value}`);
-    nextToken = formulaTokens[i];
+    let nextToken = formulaTokens[i];
 
     if (nextToken.type === "operator") {
       let nextOperator = nextToken.value;
