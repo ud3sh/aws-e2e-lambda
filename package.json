@@ -1,0 +1,27 @@
+{
+  "name": "aws-e2e-lambda",
+  "version": "1.0.0",
+  "description": "Demo Lambda Function",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ud3sh/aws-e2e-lambda.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ud3sh/aws-e2e-lambda/issues"
+  },
+  "homepage": "https://github.com/ud3sh/aws-e2e-lambda#readme",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
